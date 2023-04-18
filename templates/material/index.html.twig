@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Material{% endblock %}
+
+{% block body %}
+<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>My first blog</h1>
+                <p>My first blog post</p>
+            </div>
+        </div>
+    </div>
+    {% for property in properties %}
+        {{ properties }}
+    {% endfor %}
+{% endblock %}

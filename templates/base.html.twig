@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" >
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,44 +11,68 @@
             <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" type="text/css" href="assets/vendor/tiny-slider/tiny-slider.css">
+        <link rel="stylesheet" type="text/css" href="assets/vendor/glightbox/css/glightbox.css">
+
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
 
     </head>
     <body>
 
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/" class="logo">
-                            <img src="" style="width: auto; height:70px;" alt="">
-                        </a>
-                        <!-- ***** Logo End ***** -->
+    <!-- Header START -->
+    <header class="navbar-light navbar-sticky header-static">
+        <!-- Nav START -->
+        <nav class="navbar navbar-expand-xl">
+            <div class="container-fluid px-3 px-xl-5">
+                <!-- Logo START -->
+                <a class="navbar-brand" href="index.html">
+                    <img class="light-mode-item navbar-brand-item" src="assets/images/FR-DE_HEdS.png" alt="logo">
+                    <img class="dark-mode-item navbar-brand-item" src="assets/images/FR-DE_HEdS.png" alt="logo">
+                </a>
+                <!-- Logo END -->
 
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li class="scroll-to-section"><a href="{{ path('home') }}" class="active">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="#">Matériels</a></li>
-                            <li class="scroll-to-section"><a href="#">Scénario</a></li>
-                            <li class="scroll-to-section"><a href="#">Calendrier</a></li>
-                        </ul>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
+                <!-- Responsive navbar toggler -->
+                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-animation">
+					<span></span>
+					<span></span>
+					<span></span>
+				</span>
+                </button>
+
+                <!-- Main navbar START -->
+
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <a class="nav-link active" href="#">Accueil</a>
+                                <a class="nav-link active" href="#" >Matériels</a>
+                                <a class="nav-link active" href="#" >Scénario</a>
+                                <a class="nav-link active" href="#">Calendrier</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
                 </div>
+                <!-- Main navbar END -->
             </div>
-        </div>
+        </nav>
+        <!-- Nav END -->
     </header>
-    <!-- ***** Header Area End ***** -->
+
+
         {% block body %}{% endblock %}
 
     {% block footer %}
         <footer>
-            <div class="container">
-                <div class="col-lg-12">
+            <div class="container mt-5">
+                <div class="col-lg-12 text-center">
                     <p>Copyright © 2023 <a href="https://hevs.ch">Thème HEdS</a> Développer <i class="fa fa-code"></i> avec le <i class="fa fa-heart"></i> par <a href="http://www.antoinequarroz.ch">Antoine Quarroz</a>.</p>
                 </div>
             </div>
@@ -56,11 +80,77 @@
     {% endblock %}
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+    <script src="public/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Vendors -->
+    <script src="public/assets/vendor/tiny-slider/tiny-slider.js"></script>
+    <script src="public/assets/vendor/glightbox/js/glightbox.js"></script>
+    <script src="public/assets/vendor/purecounterjs/dist/purecounter_vanilla.js"></script>
 
     <script src="{{ asset('assets/js/functions.js') }}"></script>
+
+
+    <!-- Dark mode -->
+    <script>
+        /*
+        const storedTheme = localStorage.getItem('theme')
+
+        const getPreferredTheme = () => {
+            if (storedTheme) {
+                return storedTheme
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+
+        const setTheme = function (theme) {
+            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark')
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme)
+            }
+        }
+
+        setTheme(getPreferredTheme())
+
+        window.addEventListener('DOMContentLoaded', () => {
+            var el = document.querySelector('.theme-icon-active');
+            if(el != 'undefined' && el != null) {
+                const showActiveTheme = theme => {
+                    const activeThemeIcon = document.querySelector('.theme-icon-active use')
+                    const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+                    const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+                    document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                        element.classList.remove('active')
+                    })
+
+                    btnToActive.classList.add('active')
+                    activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+                }
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                    if (storedTheme !== 'light' || storedTheme !== 'dark') {
+                        setTheme(getPreferredTheme())
+                    }
+                })
+
+                showActiveTheme(getPreferredTheme())
+
+                document.querySelectorAll('[data-bs-theme-value]')
+                    .forEach(toggle => {
+                        toggle.addEventListener('click', () => {
+                            const theme = toggle.getAttribute('data-bs-theme-value')
+                            localStorage.setItem('theme', theme)
+                            setTheme(theme)
+                            showActiveTheme(theme)
+                        })
+                    })
+
+            }
+        })
+*/
+    </script>
 
     </body>
 </html>
