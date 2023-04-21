@@ -41,6 +41,9 @@ class Material
     #[ORM\Column(length: 255)]
     private ?string $idClass = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -152,6 +155,18 @@ class Material
     }
 
     public function setIdClass(string $idClass): self
+    {
+        $this->idClass = $idClass;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->idClass;
+    }
+
+    public function setSlug(string $idClass): self
     {
         $this->idClass = $idClass;
 

@@ -67,7 +67,6 @@ class AdminController extends AbstractController
      */
     public function deleteMaterial(Material $material, EntityManagerInterface $entityManager): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($material);
         $entityManager->flush();
 
