@@ -35,8 +35,8 @@ class Material
     #[ORM\Column(length: 255)]
     private ?string $identifiant = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    #[ORM\Column(type: "blob", nullable: true)]
+    private $image;
 
     #[ORM\Column(length: 255)]
     private ?string $idClass = null;
@@ -130,12 +130,12 @@ class Material
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage()
     {
-        return $this->image;
+        return stream_get_contents($this->image);
     }
 
-    public function setImage(string $image): self
+    public function setImage($image): self
     {
         $this->image = $image;
 

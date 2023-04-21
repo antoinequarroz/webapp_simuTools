@@ -1,0 +1,380 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord Admin{% endblock %}
+
+{% block body %}
+
+    <!-- **************** MAIN CONTENT START **************** -->
+    <main>
+    <!-- Sidebar START -->
+    <nav class="navbar sidebar navbar-expand-xl navbar-dark bg-dark">
+        <!-- Navbar brand for xl START -->
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand" href="{{ path('home') }}">
+                <img class="navbar-brand-item" src="assets/images/FR-DE_HEDS.png" alt="">
+            </a>
+        </div>
+
+        <div class="offcanvas offcanvas-start flex-row custom-scrollbar h-100" data-bs-backdrop="true" tabindex="-1" id="offcanvasSidebar">
+            <div class="offcanvas-body sidebar-content d-flex flex-column bg-dark">
+                <!-- Navbar brand for xl END -->
+
+                <!-- Sidebar menu START -->
+                <ul class="navbar-nav flex-column" id="navbar-sidebar">
+
+                    <!-- Menu item 1 -->
+                    <li class="nav-item nav-link active"><i class="bi bi-house fa-fw me-2"></i>Dashboard</li>
+                    <hr>
+
+                    <!-- Title -->
+                    <li class="nav-item ms-2 my-2">Sections</li>
+                    <hr>
+
+                    <!-- menu item 2 -->
+                    <li class="nav-item"> <a class="nav-link" href="{{ path('admin_materials') }}"><i class="fas fa-regular fa-box fa-fw me-2"></i>Materiel</a></li>
+
+                    <!-- Menu item 3 -->
+                    <li class="nav-item"> <a class="nav-link" href="{{ path('admin_scenarios') }}l"><i class="fas fa-regular fa-pager fa-fw me-2"></i>Scénario</a></li>
+
+                    <!-- Menu item 4 -->
+                    <li class="nav-item"> <a class="nav-link" href="{{ path('admin_calendar') }}"><i class="fas fa-calendar-day fa-fw me-2"></i>Calendrier</a></li>
+
+                </ul>
+                <!-- Sidebar menu end -->
+
+                <!-- Sidebar footer START -->
+                <div class="px-3 mt-auto pt-3">
+                    <div class="d-flex align-items-center justify-content-between text-primary-hover">
+                        <a class="h5 mb-0 text-body" href="admin-setting.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Settings">
+                            <i class="bi bi-gear-fill"></i>
+                        </a>
+                        <a class="h5 mb-0 text-body" href="{{ path('home') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+                            <i class="bi bi-globe"></i>
+                        </a>
+                        <a class="h5 mb-0 text-body" href="{{ path('home') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Sign out">
+                            <i class="bi bi-power"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Sidebar footer END -->
+
+            </div>
+        </div>
+    </nav>
+    <!-- Sidebar END -->
+
+
+
+    <!-- Page content START -->
+    <div class="page-content">
+        <!-- Page main content START -->
+        <div class="page-content-wrapper border">
+
+            <!-- Title -->
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <h1 class="h3 mb-2 mb-sm-0">Dashboard</h1>
+                </div>
+            </div>
+
+            <!-- Counter boxes START -->
+            <div class="row g-4 mb-4">
+                <!-- Counter item -->
+                <div class="col-md-6 col-xxl-3">
+                    <div class="card card-body bg-warning bg-opacity-15 p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Digit -->
+                            <div>
+                                <h2 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="35" data-purecounter-delay="200">0</h2>
+                                <span class="mb-0 h6 fw-light">Nombre de simu</span>
+                            </div>
+                            <!-- Icon -->
+                            <div class="icon-lg rounded-circle bg-warning text-white mb-0"><i class="fas fa-tv fa-fw"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Counter item -->
+                <div class="col-md-6 col-xxl-3">
+                    <div class="card card-body bg-purple bg-opacity-10 p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Digit -->
+                            <div>
+                                <h2 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="13"	data-purecounter-delay="200">0</h2>
+                                <span class="mb-0 h6 fw-light">Simu de patient simulé</span>
+                            </div>
+                            <!-- Icon -->
+                            <div class="icon-lg rounded-circle bg-purple text-white mb-0"><i class="fas fa-user-tie fa-fw"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Counter item -->
+                <div class="col-md-6 col-xxl-3">
+                    <div class="card card-body bg-primary bg-opacity-10 p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Digit -->
+                            <div>
+                                <h2 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="22"	data-purecounter-delay="200">0</h2>
+                                <span class="mb-0 h6 fw-light">Simu en haute fidélité</span>
+                            </div>
+                            <!-- Icon -->
+                            <div class="icon-lg rounded-circle bg-primary text-white mb-0"><i class="fas fa-robot fa-fw"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Counter item -->
+                <div class="col-md-6 col-xxl-3">
+                    <div class="card card-body bg-success bg-opacity-10 p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Digit -->
+                            <div>
+                                <div class="d-flex">
+                                    <h2 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="845"	data-purecounter-delay="200">0</h2>
+                                    <span class="mb-0 h2 ms-1">hrs</span>
+                                </div>
+                                <span class="mb-0 h6 fw-light">Total des heures</span>
+                            </div>
+                            <!-- Icon -->
+                            <div class="icon-lg rounded-circle bg-success text-white mb-0"><i class="bi bi-stopwatch-fill fa-fw"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Counter boxes END -->
+
+            <!-- Chart and Ticket START -->
+            <div class="row g-4 mb-4">
+
+                <!-- Chart START -->
+                <div class="col-xxl-12">
+                    <div class="card shadow h-100">
+
+                        <!-- Card header -->
+                        <div class="card-header p-4 border-bottom">
+                            <h5 class="card-header-title">Stats</h5>
+                        </div>
+
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <!-- Apex chart -->
+                            <div id="ChartPayout"></div>  <!-- A tester -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart END -->
+            </div>
+            <!-- Chart and Ticket END -->
+
+            <!-- Top listed Cards START -->
+            <div class="row g-4">
+
+                <!-- Top instructors START -->
+                <div class="col-lg-6 col-xxl-4">
+                    <div class="card shadow h-100">
+
+                        <!-- Card header -->
+                        <div class="card-header border-bottom d-flex justify-content-between align-items-center p-4">
+                            <h5 class="card-header-title">Team Simulation</h5>
+                        </div>
+
+                        <!-- Card body START -->
+                        <div class="card-body p-4">
+
+                            <!-- Instructor item START -->
+                            <div class="d-sm-flex justify-content-between align-items-center">
+                                <!-- Avatar and info -->
+                                <div class="d-sm-flex align-items-center mb-1 mb-sm-0">
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-md flex-shrink-0">
+                                        <img class="avatar-img rounded-circle" src="assets/images/avatar/09.jpg" alt="avatar">
+                                    </div>
+                                    <!-- Info -->
+                                    <div class="ms-0 ms-sm-2 mt-2 mt-sm-0">
+                                        <h6 class="mb-1">Alain Berard<i class="bi bi-patch-check-fill text-info small ms-1"></i></h6>
+                                        <ul class="list-inline mb-0 small">
+                                            <li class="list-inline-item fw-light me-2 mb-1 mb-sm-0"><i class="fas fa-book text-purple me-1"></i>Coordinateur</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Instructor item END -->
+
+                            <hr><!-- Divider -->
+
+                            <!-- Instructor item START -->
+                            <div class="d-sm-flex justify-content-between align-items-center">
+                                <!-- Avatar and info -->
+                                <div class="d-sm-flex align-items-center mb-1 mb-sm-0">
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-md flex-shrink-0">
+                                        <img class="avatar-img rounded-circle" src="assets/images/avatar/03.jpg" alt="avatar">
+                                    </div>
+                                    <!-- Info -->
+                                    <div class="ms-0 ms-sm-2 mt-2 mt-sm-0">
+                                        <h6 class="mb-1">Antoine Quarroz<i class="bi bi-patch-check-fill text-info small ms-1"></i></h6>
+                                        <ul class="list-inline mb-0 small">
+                                            <li class="list-inline-item fw-light me-2 mb-1 mb-sm-0"><i class="fas fa-camera text-purple me-1"></i>Médiamaticien</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Instructor item END -->
+
+                            <hr><!-- Divider -->
+
+                            <!-- Instructor item START -->
+                            <div class="d-sm-flex justify-content-between align-items-center">
+                                <!-- Avatar and info -->
+                                <div class="d-sm-flex align-items-center mb-1 mb-sm-0">
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-md flex-shrink-0">
+                                        <img class="avatar-img rounded-circle" src="assets/images/avatar/01.jpg" alt="avatar">
+                                    </div>
+                                    <!-- Info -->
+                                    <div class="ms-0 ms-sm-2 mt-2 mt-sm-0">
+                                        <h6 class="mb-1">Antoine Quarroz<i class="bi bi-patch-check-fill text-info small ms-1"></i></h6>
+                                        <ul class="list-inline mb-0 small">
+                                            <li class="list-inline-item fw-light me-2 mb-1 mb-sm-0"><i class="fas fa-book text-purple me-1"></i>Médiamaticien</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Card body END -->
+                    </div>
+                </div>
+                <!-- Top instructors END -->
+
+                <!-- Traffic sources START -->
+                <div class="col-lg-12 col-xxl-8">
+                    <div class="card shadow h-100">
+
+                        <!-- Card header -->
+                        <div class="card-header border-bottom d-flex justify-content-between align-items-center p-4">
+                            <h5 class="card-header-title">FAQ'S</h5>
+                            <a href="#" class="btn btn-link p-0 mb-0">Voir</a>  <!-- Ajouter un lien vers la page FAQ -->
+                        </div>
+
+                        <!-- Card body START -->
+                        <div class="card-body p-4">
+                            <!-- Chart -->
+                            <!-- Main content START -->
+                            <div class="col-lg-12">
+                                <!-- FAQ START -->
+                                <div class="accordion accordion-icon accordion-bg-light" id="accordionExample2">
+                                    <!-- Item -->
+                                    <div class="accordion-item mb-3">
+                                        <h6 class="accordion-header font-base" id="heading-1">
+                                            <button class="accordion-button fw-bold rounded d-inline-block collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                                Comment enregistrer une video et la revoir sur SimCapture?
+                                            </button>
+                                        </h6>
+                                        <!-- Body -->
+                                        <div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#accordionExample2">
+                                            <div class="accordion-body mt-3">
+                                                Pour enregistrer une vidéo sur SimCapture, vous devez tout d'abord vous assurer que votre session est configurée pour l'enregistrement vidéo. Ensuite, lorsque vous lancez votre simulation, vous pouvez cliquer sur le bouton "Enregistrer" pour commencer l'enregistrement vidéo.
+                                                Une fois que vous avez terminé l'enregistrement, vous pouvez accéder à la vidéo enregistrée en naviguant vers la section "Enregistrements" de votre session. Vous pourrez alors la revoir et la partager avec d'autres membres de votre équipe. Il est important de noter que la procédure exacte pour enregistrer et accéder à une vidéo peut varier en fonction de la configuration spécifique de votre session SimCapture.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item -->
+                                    <div class="accordion-item mb-3">
+                                        <h6 class="accordion-header font-base" id="heading-2">
+                                            <button class="accordion-button fw-bold rounded d-inline-block collapsed d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+                                                How to edit my Profile?
+                                            </button>
+                                        </h6>
+                                        <!-- Body -->
+                                        <div id="collapse-2" class="accordion-collapse collapse" aria-labelledby="heading-2" data-bs-parent="#accordionExample2">
+                                            <div class="accordion-body mt-3">
+                                                What deal evil rent by real in. But her ready least set lived spite solid. September how men saw tolerably two behavior arranging. She offices for highest and replied one venture pasture. Applauded no discovery in newspaper allowance am northward. Frequently partiality possession resolution at or appearance unaffected me. Engaged its was the evident pleased husband. Ye goodness felicity do disposal dwelling no. First am plate jokes to began to cause a scale. Subjects he prospect elegance followed no overcame possible it on. Improved own provided blessing may peculiar domestic. Sight house has sex never. No visited raising gravity outward subject my cottage Mr be.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item -->
+                                    <div class="accordion-item mb-3">
+                                        <h6 class="accordion-header font-base" id="heading-3">
+                                            <button class="accordion-button fw-bold collapsed rounded d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
+                                                How much should I offer the sellers?
+                                            </button>
+                                        </h6>
+                                        <!-- Body -->
+                                        <div id="collapse-3" class="accordion-collapse collapse" aria-labelledby="heading-3" data-bs-parent="#accordionExample2">
+                                            <div class="accordion-body mt-3">
+                                                Post no so what deal evil rent by real in. But her ready least set lived spite solid. September how men saw tolerably two behavior arranging. She offices for highest and replied one venture pasture. Applauded no discovery in newspaper allowance am northward. Frequently partiality possession resolution at or appearance unaffected me. Engaged its was the evident pleased husband. Ye goodness felicity do disposal dwelling no. First am plate jokes to began to cause a scale. Subjects he prospect elegance followed no overcame possible it on. Improved own provided blessing may peculiar domestic. Sight house has sex never. No visited raising gravity outward subject my cottage Mr be. Hold do at tore in park feet near my case. Invitation at understood occasional sentiments insipidity inhabiting in. Off melancholy alteration principles old. Is do speedily kindness properly oh. Respect article painted cottage he is offices parlors.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item -->
+                                    <div class="accordion-item mb-3">
+                                        <h6 class="accordion-header font-base" id="heading-4">
+                                            <button class="accordion-button fw-bold collapsed rounded d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                                                Installation Guide
+                                            </button>
+                                        </h6>
+                                        <!-- Body -->
+                                        <div id="collapse-4" class="accordion-collapse collapse" aria-labelledby="heading-4" data-bs-parent="#accordionExample2">
+                                            <div class="accordion-body mt-3">
+                                                <p>What deal evil rent by real in. But her ready least set lived spite solid. September how men saw tolerably two behavior arranging. She offices for highest and replied one venture pasture. Applauded no discovery in newspaper allowance am northward. Frequently partiality possession resolution at or appearance unaffected me. Engaged its was the evident pleased husband. Ye goodness felicity do disposal dwelling no. First am plate jokes to began to cause a scale. Subjects he prospect elegance followed no overcame possible it on. Improved own provided blessing may peculiar domestic. Sight house has sex never. No visited raising gravity outward subject my cottage Mr be.</p>
+                                                <p class="mb-0">At the moment, we only accept Credit/Debit cards and Paypal payments. Paypal is the easiest way to make payments online. While checking out your order. Be sure to fill in correct details for fast & hassle-free payment processing.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item -->
+                                    <div class="accordion-item mb-3">
+                                        <h6 class="accordion-header font-base" id="heading-5">
+                                            <button class="accordion-button fw-bold collapsed rounded d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
+                                                Additional Options and Services
+                                            </button>
+                                        </h6>
+                                        <!-- Body -->
+                                        <div id="collapse-5" class="accordion-collapse collapse" aria-labelledby="heading-5" data-bs-parent="#accordionExample2">
+                                            <div class="accordion-body mt-3">
+                                                Post no so what deal evil rent by real in. But her ready least set lived spite solid. September how men saw tolerably two behavior arranging. She offices for highest and replied one venture pasture. Applauded no discovery in newspaper allowance am northward. Frequently partiality possession resolution at or appearance unaffected me. Engaged its was the evident pleased husband. Ye goodness felicity do disposal dwelling no. First am plate jokes to began to cause a scale. Subjects he prospect elegance followed no overcame possible it on. Improved own provided blessing may peculiar domestic. Sight house has sex never. No visited raising gravity outward subject my cottage Mr be. Hold do at tore in park feet near my case. Invitation at understood occasional sentiments insipidity inhabiting in. Off melancholy alteration principles old. Is do speedily kindness properly oh. Respect article painted cottage he is offices parlors.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item -->
+                                    <div class="accordion-item">
+                                        <h6 class="accordion-header font-base" id="heading-6">
+                                            <button class="accordion-button fw-bold collapsed rounded d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-6" aria-expanded="false" aria-controls="collapse-6">
+                                                What's are the difference between a college and a university?
+                                            </button>
+                                        </h6>
+                                        <!-- Body -->
+                                        <div id="collapse-6" class="accordion-collapse collapse" aria-labelledby="heading-6" data-bs-parent="#accordionExample2">
+                                            <div class="accordion-body mt-3">
+                                                Post no so what deal evil rent by real in. But her ready least set lived spite solid. September how men saw tolerably two behavior arranging. She offices for highest and replied one venture pasture. Applauded no discovery in newspaper allowance am northward. Frequently partiality possession resolution at or appearance unaffected me. Engaged its was the evident pleased husband. Ye goodness felicity do disposal dwelling no. First am plate jokes to began to cause a scale. Subjects he prospect elegance followed no overcame possible it on. Improved own provided blessing may peculiar domestic. Sight house has sex never. No visited raising gravity outward subject my cottage Mr be. Hold do at tore in park feet near my case. Invitation at understood occasional sentiments insipidity inhabiting in. Off melancholy alteration principles old. Is do speedily kindness properly oh. Respect article painted cottage he is offices parlors.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FAQ END -->
+                            </div>
+                            <!-- Main content END -->
+                        </div>
+                    </div>
+                    <!-- Card body END -->
+                </div>
+                <!-- Traffic sources END -->
+
+            </div>
+            <!-- Top listed Cards END -->
+
+        </div>
+        <!-- Page main content END -->
+    </div>
+    <!-- Page content END -->
+
+    </main>
+    <!-- **************** MAIN CONTENT END **************** -->
+
+{% endblock %}
