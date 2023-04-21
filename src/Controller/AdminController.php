@@ -24,7 +24,53 @@ class AdminController extends AbstractController
         return $this->render('admin/dashboard.html.twig');
     }
 
-    // ...
+    /**
+     * @Route("/materials_list", name="materials_list")
+     */
+    public function listMaterials(): Response
+    {
+        $materials = $this->getDoctrine()->getRepository(Material::class)->findAll();
+
+        return $this->render('admin/materials_list.html.twig', [
+            'materials' => $materials,
+        ]);
+    }
+    /**
+     * @Route("/materials/edit/{id}", name="materials_edit")
+     */
+    public function editMaterial(Request $request, Material $material): Response
+    {
+        $form = $this->createForm(MaterialType::class, $material);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Material updated successfully.');
+
+            return $this->redirectToRoute('admin_materials_list');
+        }
+
+        return $this->render('admin/admin_materials.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/materials/delete/{id}", name="materials_delete")
+     */
+    public function deleteMaterial(Material $material): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($material);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Material deleted successfully.');
+
+        return $this->redirectToRoute('admin_materials_list');
+    }
+
 
     /**
      * @Route("/materials", name="materials")

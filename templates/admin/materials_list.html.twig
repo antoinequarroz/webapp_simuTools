@@ -1,0 +1,31 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des matériaux{% endblock %}
+
+{% block body %}
+    <h1>Liste des matériaux</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Badge</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for material in materials %}
+            <tr>
+                <td>{{ material.id }}</td>
+                <td>{{ material.titre }}</td>
+                <td>{{ material.badge }}</td>
+                <td>
+                    <a href="{{ path('admin_materials_edit', {'id': material.id}) }}" class="btn btn-primary">Modifier</a>
+                    <a href="{{ path('admin_materials_delete', {'id': material.id}) }}" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce matériel ?')">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
