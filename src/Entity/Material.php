@@ -130,12 +130,16 @@ class Material
         return $this;
     }
 
-    public function getImage()
+    public function getImage(): ?string
     {
+        if ($this->image === null) {
+            return null;
+        }
+
         return stream_get_contents($this->image);
     }
 
-    public function setImage($image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 

@@ -2,14 +2,19 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Material;
 use App\Form\MaterialType;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repository\MaterialRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use function stream_get_contents;
+
+
 
 /**
  * @Route("/admin", name="admin_")
@@ -25,11 +30,11 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/materials_list", name="materials_list")
+     * @Route("/materials/list", name="materials_list")
      */
-    public function listMaterials(): Response
+    public function listMaterials(MaterialRepository $materialRepository): Response
     {
-        $materials = $this->getDoctrine()->getRepository(Material::class)->findAll();
+        $materials = $materialRepository->findAll();
 
         return $this->render('admin/materials_list.html.twig', [
             'materials' => $materials,
@@ -38,7 +43,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/materials/edit/{id}", name="materials_edit")
      */
-    public function editMaterial(Request $request, Material $material): Response
+    public function editMaterial(Request $request, Material $material, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MaterialType::class, $material);
         $form->handleRequest($request);
@@ -60,7 +65,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/materials/delete/{id}", name="materials_delete")
      */
-    public function deleteMaterial(Material $material): Response
+    public function deleteMaterial(Material $material, EntityManagerInterface $entityManager): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($material);
@@ -75,22 +80,32 @@ class AdminController extends AbstractController
     /**
      * @Route("/materials", name="materials")
      */
-    public function adminMaterials(Request $request): Response
+    public function adminMaterials(Request $request, EntityManagerInterface $entityManager): Response
     {
         $material = new Material();
         $form = $this->createForm(MaterialType::class, $material);
         $form->handleRequest($request);
 
+        $stream = null; // Ajouter cette ligne pour initialiser la variable $stream
+
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('image')->getData();
 
-            if ($imageFile) {
-                $imageContent = file_get_contents($imageFile->getPathname());
-                $material->setImage($imageContent);
+            if ($form->isSubmitted() && $form->isValid()) {
+                /** @var UploadedFile $imageFile */
+                $imageFile = $form->get('image')->getData();
+
+                if ($imageFile) {
+                    try {
+                        $imageContent = file_get_contents($imageFile->getPathname());
+                        $material->setImage($imageContent);
+                    } catch (FileException $e) {
+                        // Gérer l'exception si l'image ne peut pas être lue
+                    }
+                }
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($material);
             $entityManager->flush();
 
@@ -99,10 +114,12 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_materials');
         }
 
-        return $this->render('admin/admin_materials.html.twig', [
+
+            return $this->render('admin/admin_materials.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/scenarios", name="scenarios")
