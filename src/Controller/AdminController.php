@@ -49,7 +49,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->flush();
 
             $this->addFlash('success', 'Material updated successfully.');
@@ -104,7 +104,6 @@ class AdminController extends AbstractController
                     }
                 }
             }
-
             $entityManager->persist($material);
             $entityManager->flush();
 

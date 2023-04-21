@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Cocur\Slugify\Slugify;
 use App\Entity\Material;
+use Gedmo\Sluggable\Util\Urlizer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class MaterialController extends AbstractController
@@ -29,16 +31,71 @@ class MaterialController extends AbstractController
     }
 
     /**
-     * @Route("/materials/{slug}", name="material_details")
+     * @Route("/materials/add", name="material_add")
      */
-    public function showMaterial(Material $material): Response
+    public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $slugify = new Slugify();
-        $slug = $slugify->slugify($material->getTitre());
+        $material = new Material();
+
+        $form = $this->createForm(MaterialType::class, $material);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $material->setSlug(Urlizer::urlize($material->getTitre()));
+            $entityManager->persist($material);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le matériel a bien été ajouté.');
+
+            return $this->redirectToRoute('material_index');
+        }
+
+        return $this->render('material/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/material/{slug}", name="material_details")
+     */
+    public function materialDetails(Material $material)
+    {
+        if (!$material) {
+            throw $this->createNotFoundException('Le matériel n\'existe pas');
+        }
 
         return $this->render('material/details.html.twig', [
             'material' => $material,
-            'slug' => $slug,
+        ]);
+    }
+
+    /**
+     * @Route("/materials/edit/{id}", name="materials_edit")
+     */
+    public function editMaterial(Request $request, Material $material, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(MaterialType::class, $material);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // ...
+
+            // Generate a slug for the material
+            $slugify = new Slugify();
+            $material->setSlug($slugify->slugify($material->getTitle()));
+
+            // ...
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Material updated successfully.');
+
+            return $this->redirectToRoute('admin_materials_list');
+        }
+
+        return $this->render('admin/admin_materials.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

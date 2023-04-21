@@ -10,7 +10,10 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h1 class="h3 mb-2">Liste des matériaux</h1>
-                            <a href="{{ path('admin_materials') }}" class="btn btn-sm btn-primary-soft">Ajouter du matériel</a>
+                            <div>
+                                <a href="{{ path('admin_materials') }}" class="btn btn-sm btn-primary-soft">Ajouter du matériel</a>
+                                <a href="{{ path('admin_dashboard') }}" class="btn btn-sm btn-secondary">Retour</a>
+                            </div>
                         </div>
                         <div class="table-responsive mt-3">
                             <!-- Table START -->
@@ -21,6 +24,7 @@
                                     <th scope="col" class="border-0 rounded-start">ID</th>
                                     <th scope="col" class="border-0">Nom du matériel</th>
                                     <th scope="col" class="border-0">Salle</th>
+                                    <th scope="col" class="border-0">Slug</th>
                                     <th scope="col" class="border-0">Nombre</th>
                                     <th scope="col" class="border-0 rounded-end">Action</th>
                                 </tr>
@@ -59,15 +63,23 @@
                                         <div class="d-flex align-items-center position-relative">
                                             <!-- Nombre -->
                                             <h6 class="table-responsive-title mb-0 ms-2">
+                                                {{ material.slug }}
+                                            </h6>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center position-relative">
+                                            <!-- Nombre -->
+                                            <h6 class="table-responsive-title mb-0 ms-2">
                                                 {{ material.nombre }}
                                             </h6>
                                         </div>
                                     </td>
 
                                     <td>
-                                        <a href="{{ path('material_details', {slug: material.slug}) }}" class="btn btn-sm btn-warning-soft me-1 mb-1 mb-md-0">Détails</a>
-                                        <a href="{{ path('admin_materials_edit', {slug: material.slug}) }}" class="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0">Modifier</a>
-                                        <a href="{{ path('admin_materials_delete', {slug: material.slug}) }}" class="btn btn-sm btn-danger-soft mb-0" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce matériel ?')">Supprimer</a>
+                                        <a href="{{ path('material_details', {'slug': material.slug}) }}" class="btn btn-sm btn-warning-soft me-1 mb-1 mb-md-0">Détails</a>
+                                        <a href="{{ path('admin_materials_edit', {'id': material.id}) }}" class="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0">Modifier</a>
+                                        <a href="{{ path('admin_materials_delete', {'id': material.id}) }}" class="btn btn-sm btn-danger-soft mb-0" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce matériel ?')">Supprimer</a>
                                     </td>
 
 
