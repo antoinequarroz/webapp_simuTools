@@ -4,23 +4,21 @@
 
 {% block body %}
     <div class="container">
-        <h1>{{ material.titre }}</h1>
-
         <div class="row">
-            <div class="col-md-4">
-                <img src="{{ asset('uploads/materials/' ~ material.image ~ '.jpg') }}" alt="{{ material.titre }}" class="img-fluid">
-            </div>
             <div class="col-md-8">
+                <h1>{{ material.titre }}</h1>
+                <img src="{{ material.getImagePath() }}" alt="{{ material.titre }}" class="img-fluid">
                 <p>{{ material.description }}</p>
-                <ul>
-                    <li>Salle : {{ material.salle }}</li>
-                    <li>Nombre : {{ material.nombre }}</li>
-                    <li>Identifiant : {{ material.identifiant }}</li>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-group">
+                    <li class="list-group-item">Badge: {{ material.badge }}</li>
+                    <li class="list-group-item">Salle: {{ material.salle }}</li>
+                    <li class="list-group-item">Localité: {{ material.localite }}</li>
+                    <li class="list-group-item">Nombre: {{ material.nombre }}</li>
+                    <li class="list-group-item">Identifiant: {{ material.identifiant }}</li>
                 </ul>
             </div>
         </div>
-
-        <a href="{{ path('material_edit', {id: material.id}) }}" class="btn btn-primary">Modifier</a>
-        <a href="{{ path('material_delete', {id: material.id}) }}" class="btn btn-danger">Supprimer</a>
     </div>
 {% endblock %}

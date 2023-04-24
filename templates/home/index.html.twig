@@ -242,11 +242,10 @@ Matériel START -->
             <br>
             <!-- Tabs content START -->
             <div class="tab-content" id="course-pills-tabContent">
-                {% for material in latestMaterials %}
                     <!-- Content START -->
                     <div class="tab-pane fade show active" id="course-pills-tabs-1" role="tabpanel" aria-labelledby="course-pills-tab-1"> <!-- Changer l'id -->
                         <div class="row g-4">
-
+                            {% for material in latestMaterials %}
                             <!-- Card item START -->
                             <div class="col-sm-6 col-lg-4 col-xl-3">
                                 <div class="card shadow h-100">
@@ -274,11 +273,11 @@ Matériel START -->
                                     </div>
                                 </div>
                             </div>
+                            {% endfor %}
                             <!-- Card item END -->
                         </div>
                     </div>
                     <!-- Content END -->
-                {% endfor %}
             </div>
             <!-- Tabs content END -->
 
@@ -436,8 +435,7 @@ Event START -->
             <!-- Tabs content END -->
         </div>
     </section>
-    <!-- =======================
-    Event END -->
+    <!-- ======================= Event END -->
 
 
 

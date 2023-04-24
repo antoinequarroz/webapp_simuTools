@@ -47,9 +47,7 @@ class MaterialType extends AbstractType
                     'data-placeholder' => 'Aucun fichier télécharger',
                 ],
             ])
-            ->add('idClass', TextType::class, [
-                'label' => "ID Classe",
-            ]);
+            ->add('idClass');
     }
 
     public function configureOptions(OptionsResolver $resolver)
