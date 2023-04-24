@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class MaterialController extends AbstractController
 {
     /**
-     * @Route("/materiel", name="materiel")
+     * @Route("/material", name="material")
      * @param MaterialRepository $materialRepository
      * @return Response
      */
@@ -59,8 +59,10 @@ class MaterialController extends AbstractController
     /**
      * @Route("/material/{slug}", name="material_details")
      */
-    public function materialDetails(Material $material)
+    public function materialDetails($slug, MaterialRepository $materialRepository)
     {
+        $material = $materialRepository->findOneBy(['slug' => $slug]);
+
         if (!$material) {
             throw $this->createNotFoundException('Le matériel n\'existe pas');
         }
@@ -69,6 +71,7 @@ class MaterialController extends AbstractController
             'material' => $material,
         ]);
     }
+
 
     /**
      * @Route("/materials/edit/{id}", name="materials_edit")

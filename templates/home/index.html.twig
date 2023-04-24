@@ -236,7 +236,7 @@ Matériel START -->
             <div class="d-md-flex justify-content-md-between align-items-center">
                 <span></span>
                 <div>
-                    <a href="#" class="btn btn-sm btn-primary-soft mb-0">En savoir plus<i class="fas fa-angle-right ms-2"></i></a>
+                    <a href="{{ path('material') }}" class="btn btn-sm btn-primary-soft mb-0">En savoir plus<i class="fas fa-angle-right ms-2"></i></a>
                 </div>
             </div>
             <br>
@@ -251,7 +251,7 @@ Matériel START -->
                             <div class="col-sm-6 col-lg-4 col-xl-3">
                                 <div class="card shadow h-100">
                                     <!-- Image -->
-                                    <img src="{{ asset('assets/images/heds/materiel/' ~ material.image) }}" class="card-img-top" alt="course image"> <!-- Ajout de l'image twig -->
+                                    <img src="{{ asset('assets/images/heds/materiel/' ~ material.image) }}" class="card-img-top" alt="{{ material.titre }}"> <!-- Ajout de l'image twig -->
                                     <!-- Card body -->
 
                                     <div class="card-body pb-0">
