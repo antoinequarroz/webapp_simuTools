@@ -31,7 +31,7 @@ class MaterialController extends AbstractController
     }
 
     /**
-     * @Route("/materials/add", name="material_add")
+     * @Route("/material/add", name="material_add")
      */
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -42,7 +42,7 @@ class MaterialController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $material->setSlug(Urlizer::urlize($material->getTitre()));
+            $material->setSlugs(Urlizer::urlize($material->getTitre()));
             $entityManager->persist($material);
             $entityManager->flush();
 
@@ -57,11 +57,12 @@ class MaterialController extends AbstractController
     }
 
     /**
-     * @Route("/material/{slug}", name="material_details")
+     * @Route("/material/{slugs}", name="material_details")
+     * @ParamConverter("material", class="App\Entity\Material", options={"mapping": {"slugs": "slug"}})
      */
-    public function materialDetails($slug, MaterialRepository $materialRepository)
+    public function materialDetails($slugs, Material $material)
     {
-        $material = $materialRepository->findOneBy(['slug' => $slug]);
+        $material = $material->findOneBy(['slugs' => $slugs]);
 
         if (!$material) {
             throw $this->createNotFoundException('Le matériel n\'existe pas');
@@ -74,7 +75,7 @@ class MaterialController extends AbstractController
 
 
     /**
-     * @Route("/materials/edit/{id}", name="materials_edit")
+     * @Route("/material/edit/{id}", name="materials_edit")
      */
     public function editMaterial(Request $request, Material $material, EntityManagerInterface $entityManager): Response
     {
@@ -86,7 +87,7 @@ class MaterialController extends AbstractController
 
             // Generate a slug for the material
             $slugify = new Slugify();
-            $material->setSlug($slugify->slugify($material->getTitle()));
+            $material->setSlugs($slugify->slugify($material->getTitle()));
 
             // ...
 
@@ -100,5 +101,17 @@ class MaterialController extends AbstractController
         return $this->render('admin/admin_materials.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/material/{slugs}", name="materials_details", requirements="slugs=[a-z0-9\-]+")
+     * @return Response
+     */
+    public function details() : Response
+    {
+        return $this->render('material/details.html.twig',
+            [
+                'material' => $material,
+            ]);
     }
 }

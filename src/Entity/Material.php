@@ -43,41 +43,10 @@ class Material
     #[ORM\Column(length: 255)]
     private ?string $idClass = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Gedmo\Slug(fields={"titre"})
-     */
-    private ?string $slug = null;
+    #[ORM\Column(length: 255)]
+    #[Gedmo\Slug(fields: ["titre"])]
+    private ?string $slugs = null;
 
-    /**
-     * Get slug
-     *
-     * @return string
-     *
-     * @Gedmo\Slug(fields={"titre"})
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function getSlug()
-    {
-        $slug = $this->slug;
-
-        if (!$slug) {
-            $slug = $this->titre;
-        }
-
-        $slug = preg_replace('/[^a-z0-9]+/', '-', strtolower($slug));
-        $slug = trim($slug, '-');
-
-        return $slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
     public function getId(): ?int
     {
         return $this->id;
@@ -91,7 +60,7 @@ class Material
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
-        $this->setSlug($titre); // Ajoutez cette ligne pour initialiser le slug
+        $this->setSlugs($titre); // Ajoutez cette ligne pour initialiser le slug
 
         return $this;
     }
@@ -192,6 +161,35 @@ class Material
     public function setIdClass(string $idClass): self
     {
         $this->idClass = $idClass;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function getSlugs()
+    {
+        $slugs = $this->slugs;
+
+        if (!$slugs) {
+            $slugs = $this->titre;
+        }
+
+        $slugs = preg_replace('/[^a-z0-9]+/', '-', strtolower($slugs));
+        $slugs = trim($slugs, '-');
+
+        return $slugs;
+    }
+
+    public function setSlugs(string $slugs): self
+    {
+        $this->slugs = $slugs;
 
         return $this;
     }
