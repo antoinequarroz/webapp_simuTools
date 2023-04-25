@@ -47,6 +47,15 @@ class Material
     #[Gedmo\Slug(fields: ["titre"])]
     private ?string $slugs = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $possibilite = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $modeEmploi = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $caracteristique = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -190,6 +199,42 @@ class Material
     public function setSlugs(string $slugs): self
     {
         $this->slugs = $slugs;
+
+        return $this;
+    }
+
+    public function getPossibilite(): ?string
+    {
+        return $this->possibilite;
+    }
+
+    public function setPossibilite(?string $possibilite): self
+    {
+        $this->possibilite = $possibilite;
+
+        return $this;
+    }
+
+    public function getModeEmploi(): ?string
+    {
+        return $this->modeEmploi;
+    }
+
+    public function setModeEmploi(?string $modeEmploi): self
+    {
+        $this->modeEmploi = $modeEmploi;
+
+        return $this;
+    }
+
+    public function getCaracteristique(): ?string
+    {
+        return $this->caracteristique;
+    }
+
+    public function setCaracteristique(?string $caracteristique): self
+    {
+        $this->caracteristique = $caracteristique;
 
         return $this;
     }

@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
-use App\Repository\MaterialRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Cocur\Slugify\Slugify;
 use App\Entity\Material;
-use Gedmo\Sluggable\Util\Urlizer;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use App\Form\MaterialType;
+use App\Repository\MaterialRepository;
+use Cocur\Slugify\Slugify;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MaterialController extends AbstractController
 {
@@ -42,7 +43,8 @@ class MaterialController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $material->setSlugs(Urlizer::urlize($material->getTitre()));
+            $slugify = new Slugify();
+            $material->setSlug($slugify->slugify($material->getTitre()));
             $entityManager->persist($material);
             $entityManager->flush();
 
@@ -58,21 +60,19 @@ class MaterialController extends AbstractController
 
     /**
      * @Route("/material/{slugs}", name="material_details")
-     * @ParamConverter("material", class="App\Entity\Material", options={"mapping": {"slugs": "slug"}})
      */
-    public function materialDetails($slugs, Material $material)
+    public function materialDetails(string $slugs, MaterialRepository $materialRepository): Response
     {
-        $material = $material->findOneBy(['slugs' => $slugs]);
+        $material = $materialRepository->findOneBy(['slugs' => $slugs]);
 
         if (!$material) {
-            throw $this->createNotFoundException('Le matériel n\'existe pas');
+            throw new NotFoundHttpException('Le matériel n\'existe pas');
         }
 
         return $this->render('material/details.html.twig', [
             'material' => $material,
         ]);
     }
-
 
     /**
      * @Route("/material/edit/{id}", name="materials_edit")
@@ -83,13 +83,8 @@ class MaterialController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // ...
-
-            // Generate a slug for the material
             $slugify = new Slugify();
-            $material->setSlugs($slugify->slugify($material->getTitle()));
-
-            // ...
+            $material->setSlug($slugify->slugify($material->getTitre()));
 
             $entityManager->flush();
 
@@ -101,17 +96,5 @@ class MaterialController extends AbstractController
         return $this->render('admin/admin_materials.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/material/{slugs}", name="materials_details", requirements="slugs=[a-z0-9\-]+")
-     * @return Response
-     */
-    public function details() : Response
-    {
-        return $this->render('material/details.html.twig',
-            [
-                'material' => $material,
-            ]);
     }
 }

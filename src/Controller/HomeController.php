@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     public function index(MaterialRepository $materialRepository): Response
     {
         // Récupérer les 6 derniers matériels de la base de données
-        $latestMaterials = $materialRepository->findBy([], ['id' => 'DESC'], 6);
+        $latestMaterials = $materialRepository->findBy([], ['id' => 'DESC'], 8);
 
         // Transmettre les 6 derniers matériels au fichier Twig
         return $this->render('home/index.html.twig', [

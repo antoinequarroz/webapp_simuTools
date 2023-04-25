@@ -3,22 +3,141 @@
 {% block title %}{{ material.titre }}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <h1>{{ material.titre }}</h1>
-                <img src="{{ material.getImagePath() }}" alt="{{ material.titre }}" class="img-fluid">
-                <p>{{ material.description }}</p>
-            </div>
-            <div class="col-md-4">
-                <ul class="list-group">
-                    <li class="list-group-item">Badge: {{ material.badge }}</li>
-                    <li class="list-group-item">Salle: {{ material.salle }}</li>
-                    <li class="list-group-item">Localité: {{ material.localite }}</li>
-                    <li class="list-group-item">Nombre: {{ material.nombre }}</li>
-                    <li class="list-group-item">Identifiant: {{ material.identifiant }}</li>
-                </ul>
+
+    <!-- =======================
+Page intro START -->
+    <section class="py-0 py-sm-2">
+        <div class="container">
+            <div class="row py-2">
+                <div class="col-lg-8">
+                    <!-- Badge -->
+                    <h6 class="mb-3 font-base bg-primary text-white py-2 px-4 rounded-2 d-inline-block">{{ material.badge }}</h6>
+                    <!-- Title -->
+                    <h1>{{ material.titre }}</h1>
+                    <!-- Content -->
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item h6 me-3 mb-1 mb-sm-0"><i class="fa fa-location-arrow text-primary me-2"></i>{{ material.localite }}</li>
+                        <li class="list-inline-item h6 me-3 mb-1 mb-sm-0"><i class="fas fa-school text-primary me-2"></i>{{ material.salle }}</li>
+                        <li class="list-inline-item h6 me-3 mb-1 mb-sm-0"><i class="fas fa-table text-primary me-2"></i>Nombre: {{ material.nombre }}</li>
+                        <li class="list-inline-item h6 me-3 mb-1 mb-sm-0"><i class="fas fa-id-card text-primary me-2"></i>ID: {{ material.id }}</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- =======================
+    Page intro END -->
+
+    <section class="pb-0 py-lg-5">
+        <div class="container">
+            <div class="row">
+                <!-- Main content START -->
+                <div class="col-lg-8">
+                    <div class="card shadow rounded-2 p-0">
+                        <!-- Tabs START -->
+                        <div class="card-header border-bottom px-4 py-3">
+                            <ul class="nav nav-pills nav-tabs-line py-0" id="course-pills-tab" role="tablist">
+                                <!-- Tab item -->
+                                <li class="nav-item me-2 me-sm-4" role="presentation">
+                                    <button class="nav-link mb-2 mb-md-0 active" id="course-pills-tab-1" data-bs-toggle="pill" data-bs-target="#course-pills-1" type="button" role="tab" aria-controls="course-pills-1" aria-selected="true">Description</button>
+                                </li>
+                                <!-- Tab item -->
+                                <li class="nav-item me-2 me-sm-4" role="presentation">
+                                    <button class="nav-link mb-2 mb-md-0" id="course-pills-tab-2" data-bs-toggle="pill" data-bs-target="#course-pills-2" type="button" role="tab" aria-controls="course-pills-2" aria-selected="false">Caractéristiques techniques</button>
+                                </li>
+                                <!-- Tab item -->
+                                <li class="nav-item me-2 me-sm-4" role="presentation">
+                                    <button class="nav-link mb-2 mb-md-0" id="course-pills-tab-3" data-bs-toggle="pill" data-bs-target="#course-pills-3" type="button" role="tab" aria-controls="course-pills-3" aria-selected="false">Mode d'emploie</button>
+                                </li>
+                                <!-- Tab item -->
+                                <li class="nav-item me-2 me-sm-4" role="presentation">
+                                    <button class="nav-link mb-2 mb-md-0" id="course-pills-tab-4" data-bs-toggle="pill" data-bs-target="#course-pills-4" type="button" role="tab" aria-controls="course-pills-4" aria-selected="false">Commander</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Tabs END -->
+
+                        <!-- Tab contents START -->
+                        <div class="card-body p-4">
+                            <div class="tab-content pt-2" id="course-pills-tabContent">
+                                <!-- Content START -->
+                                <div class="tab-pane fade show active" id="course-pills-1" role="tabpanel" aria-labelledby="course-pills-tab-1">
+                                    <!-- Course detail START -->
+                                    <h5 class="mb-3">Description</h5>
+                                    <p class="mb-3">{{material.description}}</p>
+
+                                    <!-- List content -->
+                                    {% if material.possibilite %}
+                                    <h5 class="mt-4">Possibilité pour les simus tels que</h5>
+                                    <ul class="list-group list-group-borderless mb-3">
+
+                                        <li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>{{ material.possibilite }}</li>
+                                        {% endif %}
+                                    </ul>
+
+                                    <!-- Course detail END -->
+
+                                </div>
+                                <!-- Content END -->
+
+                                <!-- Content START -->
+                                <div class="tab-pane fade" id="course-pills-2" role="tabpanel" aria-labelledby="course-pills-tab-2">
+                                    <h1>Caractéristiques techniques</h1>
+                                    <p>{{ material.caracteristique }}</p>
+                                </div>
+                                <!-- Content END -->
+
+                                <!-- Content START -->
+                                <div class="tab-pane fade" id="course-pills-3" role="tabpanel" aria-labelledby="course-pills-tab-3">
+                                    <!-- Card START -->
+                                    <div class="card mb-0 mb-md-4">
+                                        <h1>PDF</h1>
+                                    </div>
+                                    <!-- Card END -->
+
+                                    <!-- Instructor info -->
+                                    <h5 class="mb-3">About Instructor</h5>
+                                    <p class="mb-3">Fulfilled direction use continual set him propriety continued. Saw met applauded favorite deficient engrossed concealed and her. Concluded boy perpetual old supposing. Farther related bed and passage comfort civilly. Dashboard see frankness objection abilities. As hastened oh produced prospect formerly up am. Placing forming nay looking old married few has. Margaret disposed of add screened rendered six say his striking confined. </p>
+                                    <p class="mb-3">As it so contrasted oh estimating instrument. Size like body someone had. Are conduct viewing boy minutes warrant the expense? Tolerably behavior may admit daughters offending her ask own. Praise effect wishes change way and any wanted.</p>
+                                    <!-- Email address -->
+                                    <div class="col-12">
+                                        <ul class="list-group list-group-borderless mb-0">
+                                            <li class="list-group-item pb-0">Mail ID:<a href="#" class="ms-2">hello@email.com</a></li>
+                                            <li class="list-group-item pb-0">Web:<a href="#" class="ms-2">https://eduport.com</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Content END -->
+
+                                <!-- Content START -->
+                                <div class="tab-pane fade" id="course-pills-4" role="tabpanel" aria-labelledby="course-pills-tab-4">
+                                    <h1>Page en construction</h1>
+                                </div>
+                                <!-- Content END -->
+
+                            </div>
+                        </div>
+                        <!-- Tab contents END -->
+                    </div>
+                </div>
+                <!-- Main content END -->
+
+                <!-- Right sidebar START -->
+                <div class="col-lg-4 pt-5 pt-lg-0">
+                    <div class="row mb-5 mb-lg-0">
+                        <div class="col-md-6 col-lg-12">
+                            <!-- Video START -->
+                            <div class="card shadow p-2 mb-4 z-index-9">
+                                <div class="overflow-hidden rounded-3">
+                                    <img src="{{ material.image }}" class="card-img" alt="{{ material.slugs }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right sidebar END -->
+
+            </div><!-- Row END -->
+        </div>
+    </section>
 {% endblock %}
