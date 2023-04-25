@@ -25,7 +25,7 @@
                                     <th scope="col" class="border-0">Nom du matériel</th>
                                     <th scope="col" class="border-0">Salle</th>
                                     <th scope="col" class="border-0">Slug</th>
-                                    <th scope="col" class="border-0">Nombre</th>
+                                    <th scope="col" class="border-0">Nombres</th>
                                     <th scope="col" class="border-0 rounded-end">Action</th>
                                 </tr>
                                 </thead>
@@ -77,7 +77,7 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ path('material_details', {'slugs': material.slugs}) }}" class="btn btn-sm btn-warning-soft me-1 mb-1 mb-md-0">Détails</a>
+                                        <a href="{{ path('material_details', {'id': material.id}) }}" class="btn btn-sm btn-warning-soft me-1 mb-1 mb-md-0">Détails</a>
                                         <a href="{{ path('admin_materials_edit', {'id': material.id}) }}" class="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0">Modifier</a>
                                         <a href="{{ path('admin_materials_delete', {'id': material.id}) }}" class="btn btn-sm btn-danger-soft mb-0" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce matériel ?')">Supprimer</a>
                                     </td>

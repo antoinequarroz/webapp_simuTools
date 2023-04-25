@@ -4,6 +4,8 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-material_details:
-    path: '/material/{slugs}'
-    controller: 'App\Controller\MaterialController::materialDetails'
+material_detail:
+    path: /material/{id}
+    controller: App\Controller\MaterialController::detail
+    requirements:
+        id: \d+

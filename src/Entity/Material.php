@@ -6,8 +6,13 @@ use App\Repository\MaterialRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Cocur\Slugify\Slugify;
 
 
+/**
+ * @ORM\Entity(repositoryClass=MaterialRepository::class)
+ * @ORM\HasLifecycleCallbacks()
+ */
 #[ORM\Entity(repositoryClass: MaterialRepository::class)]
 class Material
 {
@@ -34,7 +39,7 @@ class Material
     #[ORM\Column]
     private ?int $nombre = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $identifiant = null;
 
     #[ORM\Column(type: "blob", nullable: true)]
@@ -58,13 +63,6 @@ class Material
 
     #[ORM\Column(length: 255)]
     private ?string $liens = null;
-
-    // ...
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $imagePath;
 
     public function getId(): ?int
     {
@@ -261,16 +259,13 @@ class Material
         return $this;
     }
 
-    public function getImagePath(): ?string
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateSlug(): void
     {
-        return $this->imagePath;
+        $slugify = new Slugify();
+        $this->slugs = $slugify->slugify($this->titre);
     }
-
-    public function setImagePath(?string $imagePath): self
-    {
-        $this->imagePath = $imagePath;
-
-        return $this;
-    }
-
 }

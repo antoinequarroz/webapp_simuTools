@@ -35,7 +35,7 @@ class MaterialController extends AbstractController
     /**
      * @Route("/material/add", name="material_add")
      */
-    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    public function add(Request $request): Response
     {
         $material = new Material();
 
@@ -45,9 +45,8 @@ class MaterialController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slugify = new Slugify();
-            $material->setSlug($slugify->slugify($material->getTitre()));
-            $entityManager->persist($material);
-            $entityManager->flush();
+            $slug = $slugify->slugify($material->getTitre());
+            $material->setSlug($slug);
 
             $this->addFlash('success', 'Le matériel a bien été ajouté.');
 
@@ -60,14 +59,14 @@ class MaterialController extends AbstractController
     }
 
     /**
-     * @Route("/material/{slugs}", name="material_details")
+     * @Route("/material/{id}", name="material_details")
      */
-    public function materialDetails(string $slugs, MaterialRepository $materialRepository): Response
+    public function materialDetails(string $id, MaterialRepository $materialRepository): Response
     {
-        $material = $materialRepository->findOneBy(['slugs' => $slugs]);
+        $material = $materialRepository->find($id);
 
         if (!$material) {
-            throw new NotFoundHttpException('Le matériel n\'existe pas');
+            throw $this->createNotFoundException('Le matériel demandé n\'existe pas.');
         }
 
         return $this->render('material/details.html.twig', [
