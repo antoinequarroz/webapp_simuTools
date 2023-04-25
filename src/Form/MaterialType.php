@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class MaterialType extends AbstractType
 {
@@ -67,9 +68,7 @@ class MaterialType extends AbstractType
                     'data-placeholder' => 'Aucun fichier télécharger',
                 ],
             ])
-            ->add('caracteristique', TextType::class, [
-                'label' => 'Caractéristique',
-            ])
+
             ->add('image', FileType::class, [
                 'label' => 'Image',
                 'required' => false,
@@ -91,8 +90,8 @@ class MaterialType extends AbstractType
                     'course-pills-tab-4' => 'course-pills-tab-4',
                 ],
             ])
-            ->add('slugs', TextType::class, [
-                'label' => 'Slug',
+            ->add('caracteristique', TextType::class, [
+                'label' => 'Caractéristique',
             ]);
     }
 
