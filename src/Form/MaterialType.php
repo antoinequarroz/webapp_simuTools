@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Material;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,20 +24,51 @@ class MaterialType extends AbstractType
                 'label' => 'Description',
                 'required' => false,
             ])
-            ->add('badge', TextType::class, [
+            ->add('badge', ChoiceType::class, [
                 'label' => 'Badge',
+                'choices' => [
+                    'Basse fidélité' => 'Basse fidélité',
+                    'Moyenne fidélité' => 'Moyenne fidélité',
+                    'Haute fidélité' => 'Haute fidélité',
+                    'Petit matériel' => 'Petit matériel',
+                ],
             ])
-            ->add('salle', TextType::class, [
+            ->add('salle', ChoiceType::class, [
                 'label' => 'Salle',
+                'choices' => [
+                    'Salle étage 0' => 'Salle étage 0',
+                    'Salle étage 1' => 'Salle étage 1',
+                    'Salle étage 2' => 'Salle étage 2',
+                    'Salle étage -1' => 'Salle étage -1',
+                    'Salle étage -2' => 'Salle étage -2',
+                ],
             ])
-            ->add('localite', TextType::class, [
+            ->add('localite', ChoiceType::class, [
                 'label' => 'Localité',
+                'choices' => [
+                    'Sion' => 'Sion',
+                    'Visp' => 'Visp',
+                    'Loèche les bains' => 'Loèche les bains',
+                    'Monthey' => 'Monthey',
+                ],
             ])
             ->add('nombre', IntegerType::class, [
                 'label' => 'Nombre',
             ])
-            ->add('identifiant', TextType::class, [
-                'label' => "ID d'identifiant",
+            ->add('possibilite', TextType::class, [
+                'label' => 'Possibilité',
+            ])
+            ->add('modeEmploi', FileType::class, [
+                'label' => 'Mode d\'emploi (PDF)',
+                'required' => false,
+                'mapped' => false,
+                'attr' => [
+                    'data-browse' => 'Télécharger',
+                    'data-placeholder' => 'Aucun fichier télécharger',
+                ],
+            ])
+            ->add('caracteristique', TextType::class, [
+                'label' => 'Caractéristique',
             ])
             ->add('image', FileType::class, [
                 'label' => 'Image',
@@ -47,7 +79,21 @@ class MaterialType extends AbstractType
                     'data-placeholder' => 'Aucun fichier télécharger',
                 ],
             ])
-            ->add('idClass');
+            ->add('liens', TextType::class, [
+                'label' => 'Liens',
+            ])
+            ->add('idClass', ChoiceType::class, [
+                'label' => "ID Classe",
+                'choices' => [
+                    'course-pills-tab-1' => 'course-pills-tab-1',
+                    'course-pills-tab-2' => 'course-pills-tab-2',
+                    'course-pills-tab-3' => 'course-pills-tab-3',
+                    'course-pills-tab-4' => 'course-pills-tab-4',
+                ],
+            ])
+            ->add('slugs', TextType::class, [
+                'label' => 'Slug',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

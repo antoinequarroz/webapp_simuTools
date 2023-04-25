@@ -56,6 +56,9 @@ class Material
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $caracteristique = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $liens = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -235,6 +238,18 @@ class Material
     public function setCaracteristique(?string $caracteristique): self
     {
         $this->caracteristique = $caracteristique;
+
+        return $this;
+    }
+
+    public function getLiens(): ?string
+    {
+        return $this->liens;
+    }
+
+    public function setLiens(string $liens): self
+    {
+        $this->liens = $liens;
 
         return $this;
     }
