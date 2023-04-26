@@ -49,7 +49,7 @@ class MaterialType extends AbstractType
                 'choices' => [
                     'Sion' => 'Sion',
                     'Visp' => 'Visp',
-                    'Loèche les bains' => 'Loèche les bains',
+                    'Loèche-les-bains' => 'Loèche-les-bains',
                     'Monthey' => 'Monthey',
                 ],
             ])
@@ -84,10 +84,10 @@ class MaterialType extends AbstractType
             ->add('idClass', ChoiceType::class, [
                 'label' => "ID Classe",
                 'choices' => [
-                    'course-pills-tab-1' => 'course-pills-tab-1',
-                    'course-pills-tab-2' => 'course-pills-tab-2',
-                    'course-pills-tab-3' => 'course-pills-tab-3',
-                    'course-pills-tab-4' => 'course-pills-tab-4',
+                    'Basse fidélité' => 'course-pills-tab-1',
+                    'Moyenne fidélité' => 'course-pills-tab-2',
+                    'Haute fidélité' => 'course-pills-tab-3',
+                    'Petit matériel' => 'course-pills-tab-4',
                 ],
             ])
             ->add('caracteristique', TextType::class, [
