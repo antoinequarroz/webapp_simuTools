@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class MaterialType extends AbstractType
 {
@@ -70,15 +69,15 @@ class MaterialType extends AbstractType
                 ],
             ])
 
-            ->add('image', VichImageType::class, [
+            ->add('image', FileType::class, [
+                'label' => 'Image',
                 'required' => false,
-                'allow_delete' => true,
-                'download_label' => 'Télécharger',
-                'download_uri' => true,
-                'image_uri' => true,
-                'asset_helper' => true,
+                'mapped' => false,
+                'attr' => [
+                    'data-browse' => 'Télécharger',
+                    'data-placeholder' => 'Aucun fichier téléchargé',
+                ],
             ])
-
             ->add('liens', TextType::class, [
                 'label' => 'Liens',
             ])

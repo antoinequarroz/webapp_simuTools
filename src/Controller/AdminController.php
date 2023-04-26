@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Material;
 use App\Form\MaterialType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\MaterialRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use function stream_get_contents;
+
 
 
 /**
@@ -42,23 +45,20 @@ class AdminController extends AbstractController
      */
     public function editMaterial(Request $request, Material $material, EntityManagerInterface $entityManager): Response
     {
-        $material = new Material();
         $form = $this->createForm(MaterialType::class, $material);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $entityManager->persist($material);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le materiel a bien été enregistré.');
+            $this->addFlash('success', 'Material updated successfully.');
 
             return $this->redirectToRoute('admin_materials_list');
         }
 
         return $this->render('admin/admin_materials.html.twig', [
             'form' => $form->createView(),
-            'material' => $material,
         ]);
     }
 
@@ -70,7 +70,7 @@ class AdminController extends AbstractController
         $entityManager->remove($material);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Le materiel a bien été supprimé');
+        $this->addFlash('success', 'Material deleted successfully.');
 
         return $this->redirectToRoute('admin_materials_list');
     }
@@ -79,41 +79,42 @@ class AdminController extends AbstractController
     /**
      * @Route("/materials", name="materials")
      */
-    public function adminMaterials(Request $request, EntityManagerInterface $entityManager)
+    public function adminMaterials(Request $request, EntityManagerInterface $entityManager): Response
     {
         $material = new Material();
         $form = $this->createForm(MaterialType::class, $material);
         $form->handleRequest($request);
 
+        $stream = null; // Ajouter cette ligne pour initialiser la variable $stream
+
         if ($form->isSubmitted() && $form->isValid()) {
-            // Gérer le fichier téléchargé
-            $file = $form->get('image')->getData();
-            if ($file) {
-                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('image')->getData();
 
-                try {
-                    $file->move(
-                        $this->getParameter('images_directory'),
-                        $fileName
-                    );
-                } catch (FileException $e) {
-                    // Gérer l'exception si quelque chose se passe mal lors du téléchargement du fichier
+            if ($form->isSubmitted() && $form->isValid()) {
+                /** @var UploadedFile $imageFile */
+                $imageFile = $form->get('image')->getData();
+
+                if ($imageFile) {
+                    try {
+                        $imageContent = file_get_contents($imageFile->getPathname());
+                        $material->setImage($imageContent);
+                    } catch (FileException $e) {
+                        // Gérer l'exception si l'image ne peut pas être lue
+                    }
                 }
-
-                $material->setImagePath($fileName);
             }
-
             $entityManager->persist($material);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Material added successfully.');
 
-            return $this->redirectToRoute('admin_materials_list');
+            return $this->redirectToRoute('admin_materials');
         }
 
 
-            return $this->render('admin/admin_materials.html.twig', [
+        return $this->render('admin/admin_materials.html.twig', [
             'form' => $form->createView(),
-            'material' => $material,
         ]);
     }
 

@@ -52,13 +52,10 @@
                 </div>
 
                 <div class="mb-3">
-                    {{ form_label(form.image, 'Image', {'label_attr': {'class': 'form-label'}}) }}
-                    {% if material.imagePath %}
-                        <div class="mb-2">
-                            <img src="{{ asset('uploads/images/' ~ material.imagePath) }}" alt="Image de {{ material.titre }}" class="img-thumbnail" width="223">
-                        </div>
-                    {% endif %}
-                    {{ form_widget(form.image, {'attr': {'class': 'form-control', 'type': 'file'}}) }}
+                    <div class="mb-3">
+                        {{ form_label(form.image, 'Image', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.image, {'attr': {'class': 'form-control', 'type': 'file'}}) }}
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -94,4 +91,3 @@
         </div>
     </div>
 {% endblock %}
-
