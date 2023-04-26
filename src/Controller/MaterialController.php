@@ -88,7 +88,7 @@ class MaterialController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Material updated successfully.');
+            $this->addFlash('success', 'Le materiel a bien été enregistré.');
 
             return $this->redirectToRoute('admin_materials_list');
         }

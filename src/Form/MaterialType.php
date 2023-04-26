@@ -75,7 +75,7 @@ class MaterialType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'data-browse' => 'Télécharger',
-                    'data-placeholder' => 'Aucun fichier télécharger',
+                    'data-placeholder' => 'Aucun fichier téléchargé',
                 ],
             ])
             ->add('liens', TextType::class, [

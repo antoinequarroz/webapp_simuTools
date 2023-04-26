@@ -9,11 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Material;
 use App\Form\MaterialType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\MaterialRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use function stream_get_contents;
-
 
 
 /**
@@ -52,13 +49,14 @@ class AdminController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Material updated successfully.');
+            $this->addFlash('success', 'Le materiel a bien été enregistré.');
 
             return $this->redirectToRoute('admin_materials_list');
         }
 
         return $this->render('admin/admin_materials.html.twig', [
             'form' => $form->createView(),
+            'material' => $material,
         ]);
     }
 
@@ -70,7 +68,7 @@ class AdminController extends AbstractController
         $entityManager->remove($material);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Material deleted successfully.');
+        $this->addFlash('success', 'Le materiel a bien été supprimé');
 
         return $this->redirectToRoute('admin_materials_list');
     }
@@ -79,42 +77,47 @@ class AdminController extends AbstractController
     /**
      * @Route("/materials", name="materials")
      */
-    public function adminMaterials(Request $request, EntityManagerInterface $entityManager): Response
+    public function adminMaterials(Request $request, EntityManagerInterface $entityManager)
     {
         $material = new Material();
         $form = $this->createForm(MaterialType::class, $material);
         $form->handleRequest($request);
 
-        $stream = null; // Ajouter cette ligne pour initialiser la variable $stream
-
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $imageFile */
-            $imageFile = $form->get('image')->getData();
+            // Si une image a été téléchargée
+            if ($uploadedFile = $form['image']->getData()) {
+                // Générer un nom de fichier unique
+                $newFilename = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                /** @var UploadedFile $imageFile */
-                $imageFile = $form->get('image')->getData();
-
-                if ($imageFile) {
-                    try {
-                        $imageContent = file_get_contents($imageFile->getPathname());
-                        $material->setImage($imageContent);
-                    } catch (FileException $e) {
-                        // Gérer l'exception si l'image ne peut pas être lue
-                    }
+                // Déplacez le fichier dans le dossier de téléchargement
+                try {
+                    $uploadedFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Gérer l'erreur si quelque chose ne va pas pendant le téléchargement
                 }
+
+                // Mettre à jour la propriété imagePath de l'entité Material avec le nouveau nom de fichier
+                $material->setImagePath($newFilename);
             }
+
+            // Persistez et sauvegardez l'entité Material
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($material);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Material added successfully.');
+            $this->addFlash('success', 'Le materiel a bien été ajouté');
 
-            return $this->redirectToRoute('admin_materials');
+            // Redirigez vers la liste des matériaux ou la page souhaitée
+            return $this->redirectToRoute('admin_materials_list');
         }
 
 
             return $this->render('admin/admin_materials.html.twig', [
             'form' => $form->createView(),
+            'material' => $material,
         ]);
     }
 
