@@ -6,6 +6,8 @@ use App\Repository\MaterialRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Cocur\Slugify\Slugify;
 
 
@@ -42,7 +44,10 @@ class Material
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $identifiant = null;
 
-    #[ORM\Column(type: "blob", nullable: true)]
+    /**
+     * @Vich\UploadableField(mapping="material_image", fileNameProperty="imagePath")
+     * @var File|null
+     */
     private $image;
 
     #[ORM\Column(length: 255)]
@@ -66,6 +71,7 @@ class Material
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $imagePath;
 
@@ -171,19 +177,17 @@ class Material
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?File
     {
-        if ($this->image === null) {
-            return null;
-        }
-
-        return stream_get_contents($this->image);
+        return $this->image;
     }
 
-    public function setImage(?string $image): self
+    public function setImage(?File $image = null): self
     {
         $this->image = $image;
-
+        if (null !== $image) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
         return $this;
     }
 

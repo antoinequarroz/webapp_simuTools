@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Material;
 use App\Form\MaterialType;
 use App\Repository\MaterialRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 
 /**
@@ -42,11 +42,13 @@ class AdminController extends AbstractController
      */
     public function editMaterial(Request $request, Material $material, EntityManagerInterface $entityManager): Response
     {
+        $material = new Material();
         $form = $this->createForm(MaterialType::class, $material);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $entityManager->persist($material);
             $entityManager->flush();
 
             $this->addFlash('success', 'Le materiel a bien été enregistré.');
@@ -84,33 +86,27 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Si une image a été téléchargée
-            if ($uploadedFile = $form['image']->getData()) {
-                // Générer un nom de fichier unique
-                $newFilename = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+            // Gérer le fichier téléchargé
+            $file = $form->get('image')->getData();
+            if ($file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
-                // Déplacez le fichier dans le dossier de téléchargement
                 try {
-                    $uploadedFile->move(
+                    $file->move(
                         $this->getParameter('images_directory'),
-                        $newFilename
+                        $fileName
                     );
                 } catch (FileException $e) {
-                    // Gérer l'erreur si quelque chose ne va pas pendant le téléchargement
+                    // Gérer l'exception si quelque chose se passe mal lors du téléchargement du fichier
                 }
 
-                // Mettre à jour la propriété imagePath de l'entité Material avec le nouveau nom de fichier
-                $material->setImagePath($newFilename);
+                $material->setImagePath($fileName);
             }
 
-            // Persistez et sauvegardez l'entité Material
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($material);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le materiel a bien été ajouté');
 
-            // Redirigez vers la liste des matériaux ou la page souhaitée
             return $this->redirectToRoute('admin_materials_list');
         }
 
