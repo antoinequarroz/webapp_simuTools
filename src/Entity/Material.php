@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
@@ -44,7 +45,7 @@ class Material
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $identifiant = null;
 
-    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName')]
+    #[Vich\UploadableField(mapping: 'materiel', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
@@ -162,22 +163,6 @@ class Material
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        if ($this->image === null) {
-            return null;
-        }
-
-        return stream_get_contents($this->image);
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     public function getIdClass(): ?string
     {
         return $this->idClass;
@@ -276,4 +261,64 @@ class Material
         $slugify = new Slugify();
         $this->slugs = $slugify->slugify($this->titre);
     }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Material
+     */
+    public function setImageFile(?File $imageFile): Material
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updatedAt = new \DateTimeImmutable('now');
+        }
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param string|null $imageName
+     * @return Material
+     */
+    public function setImageName(?string $imageName): Material
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTimeImmutable|null $updatedAt
+     * @return Material
+     */
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): Material
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+
 }

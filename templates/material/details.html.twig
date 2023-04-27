@@ -133,8 +133,8 @@ Page intro START -->
                             <!-- Video START -->
                             <div class="card shadow p-2 mb-4 z-index-9">
                                 <div class="overflow-hidden rounded-3">
-                                    {% if material.imagePath %}
-                                        <img src="{{ asset('uploads/images/' ~ material.imagePath) }}" alt="Image de {{ material.titre }}" class="img-thumbnail">
+                                    {% if material.imageName%}
+                                        <img src="{{ asset('uploads/images/materials' ~ material.imageFile) }}" alt="Image de {{ material.imageName }}" class="img-thumbnail">
                                     {% endif %} <!-- Ajout de l'image twig -->
                                 </div>
                             </div>

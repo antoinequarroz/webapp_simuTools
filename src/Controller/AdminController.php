@@ -12,7 +12,7 @@ use App\Form\MaterialType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\MaterialRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use function stream_get_contents;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 
@@ -85,25 +85,25 @@ class AdminController extends AbstractController
         $form = $this->createForm(MaterialType::class, $material);
         $form->handleRequest($request);
 
-        $stream = null; // Ajouter cette ligne pour initialiser la variable $stream
-
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imageFile */
-            $imageFile = $form->get('image')->getData();
+            $imageFile = $form->get('imageFile')->getData();
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                /** @var UploadedFile $imageFile */
-                $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                // Lire le contenu du fichier image
+                $imageContent = file_get_contents($imageFile->getPathname());
 
-                if ($imageFile) {
-                    try {
-                        $imageContent = file_get_contents($imageFile->getPathname());
-                        $material->setImage($imageContent);
-                    } catch (FileException $e) {
-                        // Gérer l'exception si l'image ne peut pas être lue
-                    }
-                }
+                // Créer un fichier temporaire pour stocker l'image
+                $tempImagePath = sys_get_temp_dir() . '/temp_image';
+                file_put_contents($tempImagePath, $imageContent);
+
+                // Créer un objet UploadedFile à partir du fichier temporaire et supprimez-le après l'avoir utilisé
+                $tempImageFile = new UploadedFile($tempImagePath, 'temp_image', null, null, true);
+
+                // Maintenant, passez un objet File à la méthode setImageFile()
+                $material->setImageFile($tempImageFile);
             }
+
             $entityManager->persist($material);
             $entityManager->flush();
 
@@ -111,7 +111,6 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('admin_materials');
         }
-
 
         return $this->render('admin/admin_materials.html.twig', [
             'form' => $form->createView(),

@@ -69,7 +69,7 @@ class MaterialType extends AbstractType
                 ],
             ])
 
-            ->add('image', FileType::class, [
+            ->add('imageFile', FileType::class, [
                 'label' => 'Image',
                 'required' => false,
                 'mapped' => false,

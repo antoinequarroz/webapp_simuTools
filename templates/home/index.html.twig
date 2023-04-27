@@ -250,8 +250,8 @@ Matériel START -->
                             <div class="col-sm-6 col-lg-4 col-xl-3">
                                 <div class="card shadow h-100">
                                     <!-- Image -->
-                                    {% if material.imagePath %}
-                                        <img src="{{ asset('uploads/images/' ~ material.imagePath) }}" alt="Image de {{ material.titre }}" class="img-thumbnail">
+                                    {% if material.imageFile %}
+                                        <img src="{{ asset('uploads/images/' ~ material.imageFile) }}" alt="Image de {{ material.titre }}" class="img-thumbnail">
                                     {% endif %} <!-- Ajout de l'image twig -->
                                     <!-- Card body -->
 
