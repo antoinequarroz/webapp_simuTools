@@ -13,10 +13,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
+#[Vich\Uploadable]
+
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MaterialRepository")
+ * @ORM\Entity(repositoryClass=MaterialRepository::class)
  * @ORM\HasLifecycleCallbacks()
- * @Vich\Uploadable
  */
 class Material
 {
@@ -58,10 +59,6 @@ class Material
      */
     private ?int $nombre = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $identifiant = null;
 
     /**
      * @var string|null
@@ -69,14 +66,12 @@ class Material
      */
     private ?string $filename = null;
 
-    /**
-     * @var File|null
-     * @Vich\UploadableField(mapping="material_image", fileNameProperty="filename")
-     */
+
+    #[Vich\UploadableField(mapping: 'material_image', fileNameProperty: 'filename')]
     private ?File $imageFile = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -97,7 +92,7 @@ class Material
     private ?string $possibilite = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $modeEmploi = null;
 
@@ -185,18 +180,6 @@ class Material
     public function setNombre(int $nombre): self
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getIdentifiant(): ?string
-    {
-        return $this->identifiant;
-    }
-
-    public function setIdentifiant(string $identifiant): self
-    {
-        $this->identifiant = $identifiant;
 
         return $this;
     }

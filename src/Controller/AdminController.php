@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\File\File;
  * @Route("/admin", name="admin_")
  */
 class AdminController extends AbstractController
+
+
 {
     /**
      * @Route("/", name="dashboard")
@@ -118,4 +120,5 @@ class AdminController extends AbstractController
         // Implémentez la logique de gestion du calendrier ici
         return $this->render('admin/calendar.html.twig');
     }
+    // ...
 }

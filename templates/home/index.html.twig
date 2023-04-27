@@ -251,7 +251,7 @@ Matériel START -->
                                 <div class="card shadow h-100">
                                     <!-- Image -->
                                     {% if material.filename %}
-                                        <img src="{{ asset('uploads/images/' ~ material.imageFile) }}" alt="{{ material.titre }}" class="img-thumbnail" />
+                                        <img src="{{ vich_uploader_asset(material, 'imageFile') }}" alt="{{ material.filename }}" class="img-thumbnail" />
                                     {% endif %}<!-- Ajout de l'image twig -->
                                     <!-- Card body -->
 
