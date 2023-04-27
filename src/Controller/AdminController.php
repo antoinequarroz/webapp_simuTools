@@ -86,23 +86,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $imageFile */
-            $imageFile = $form->get('imageFile')->getData();
-
-            if ($imageFile) {
-                // Lire le contenu du fichier image
-                $imageContent = file_get_contents($imageFile->getPathname());
-
-                // Créer un fichier temporaire pour stocker l'image
-                $tempImagePath = sys_get_temp_dir() . '/temp_image';
-                file_put_contents($tempImagePath, $imageContent);
-
-                // Créer un objet UploadedFile à partir du fichier temporaire et supprimez-le après l'avoir utilisé
-                $tempImageFile = new UploadedFile($tempImagePath, 'temp_image', null, null, true);
-
-                // Maintenant, passez un objet File à la méthode setImageFile()
-                $material->setImageFile($tempImageFile);
-            }
 
             $entityManager->persist($material);
             $entityManager->flush();

@@ -72,11 +72,6 @@ class MaterialType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'label' => 'Image',
                 'required' => false,
-                'mapped' => false,
-                'attr' => [
-                    'data-browse' => 'Télécharger',
-                    'data-placeholder' => 'Aucun fichier téléchargé',
-                ],
             ])
             ->add('liens', TextType::class, [
                 'label' => 'Liens',

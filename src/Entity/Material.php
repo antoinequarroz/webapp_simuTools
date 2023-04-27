@@ -9,68 +9,106 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
- * @ORM\Entity(repositoryClass=MaterialRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\MaterialRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
-#[ORM\Entity(repositoryClass: MaterialRepository::class)]
 class Material
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @Assert\Length(min=5, max=255)
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $titre = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $badge = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $salle = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $localite = null;
 
-    #[ORM\Column]
+    /**
+     * @ORM\Column(type="integer")
+     */
     private ?int $nombre = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $identifiant = null;
 
-    #[Vich\UploadableField(mapping: 'materiel', fileNameProperty: 'imageName')]
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $filename = null;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="material_image", fileNameProperty="filename")
+     */
     private ?File $imageFile = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?string $imageName = null;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
-
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $idClass = null;
 
-    #[ORM\Column(length: 255)]
-    #[Gedmo\Slug(fields: ["titre"])]
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"titre"})
+     */
     private ?string $slugs = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $possibilite = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $modeEmploi = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $caracteristique = null;
 
-    #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private ?string $liens = null;
 
     public function getId(): ?int
@@ -262,6 +300,36 @@ class Material
         $this->slugs = $slugify->slugify($this->titre);
     }
 
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+
+    public function setUpdatedAt(?\DateTime $updated_at): Material
+    {
+        $this->updated_at = $updated_at;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param string|null $filename
+     * @return Material
+     */
+    public function setFilename(?string $filename): Material
+    {
+        $this->filename = $filename;
+        return $this;
+    }
+
     /**
      * @return File|null
      */
@@ -278,47 +346,12 @@ class Material
     {
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile) {
-            $this->updatedAt = new \DateTimeImmutable('now');
+            $this->updated_at = new \DateTime('now');
         }
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
 
-    /**
-     * @param string|null $imageName
-     * @return Material
-     */
-    public function setImageName(?string $imageName): Material
-    {
-        $this->imageName = $imageName;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeImmutable|null
-     */
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTimeImmutable|null $updatedAt
-     * @return Material
-     */
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): Material
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
 
 
 }
