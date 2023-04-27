@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
@@ -42,8 +44,14 @@ class Material
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $identifiant = null;
 
-    #[ORM\Column(type: "blob", nullable: true)]
-    private $image;
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $idClass = null;
@@ -63,23 +71,6 @@ class Material
 
     #[ORM\Column(length: 255)]
     private ?string $liens = null;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $imagePath;
-
-    public function getImagePath(): ?string
-    {
-        return $this->imagePath;
-    }
-
-    public function setImagePath(?string $imagePath): self
-    {
-        $this->imagePath = $imagePath;
-
-        return $this;
-    }
 
     public function getId(): ?int
     {
