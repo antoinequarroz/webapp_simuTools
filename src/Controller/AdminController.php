@@ -52,6 +52,20 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Gestion de l'image
+            $imageFile = $form['filename']->getData();
+            if ($imageFile) {
+                // Copie temporaire de l'image
+                $tempImagePath = tempnam(sys_get_temp_dir(), 'temp_image');
+                file_put_contents($tempImagePath, file_get_contents($imageFile->getPathname()));
+
+                // Créer un objet UploadedFile à partir du fichier temporaire et supprimez-le après l'avoir utilisé
+                $tempImageFile = new UploadedFile($tempImagePath, 'temp_image', null, null, true);
+
+                // Maintenant, passez un objet File à la méthode setImageFile()
+                $material->setImageFile($tempImageFile);
+            }
+
             $entityManager->flush();
 
             $this->addFlash('success', 'Material updated successfully.');
@@ -88,6 +102,20 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Gestion de l'image
+            $imageFile = $form['filename']->getData();
+            if ($imageFile) {
+                // Copie temporaire de l'image
+                $tempImagePath = tempnam(sys_get_temp_dir(), 'temp_image');
+                file_put_contents($tempImagePath, file_get_contents($imageFile->getPathname()));
+
+                // Créer un objet UploadedFile à partir du fichier temporaire et supprimez-le après l'avoir utilisé
+                $tempImageFile = new UploadedFile($tempImagePath, 'temp_image', null, null, true);
+
+                // Maintenant, passez un objet File à la méthode setImageFile()
+                $material->setImageFile($tempImageFile);
+            }
 
             $entityManager->persist($material);
             $entityManager->flush();

@@ -47,9 +47,11 @@
                         <div class="col-sm-6 col-lg-4 col-xl-3">
                             <div class="card shadow h-100">
                                 <!-- Image -->
-                                {% if material.imageFile %}
-                                    <img src="{{ asset('uploads/images/' ~ material.imageFile) }}" alt="Image de {{ material.imageName }}" class="img-thumbnail">
-                                {% endif %} <!-- Ajout de l'image twig -->
+                                {% if material.filename %}
+                                    <img src="{{ vich_uploader_asset(material, 'imageFile') }}" alt="{{ material.filename }}" class="img-thumbnail" />
+                                {% else %}
+                                    <p>Aucune image disponible</p>
+                                {% endif %}
                                 <!-- Card body -->
 
                                 <div class="card-body pb-0">
