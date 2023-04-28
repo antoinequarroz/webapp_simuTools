@@ -24,11 +24,12 @@
                         </div>
                         <div class="table-responsive mt-3">
                             <!-- Table START -->
-                            <table class="table table-dark-gray align-middle p-4 mb-0 table-hover w-100">
+                            <table class="table table-dark-gray align-middle p-4 mb-0 table-hover w-100 text-center">
                                 <!-- Table head -->
                                 <thead>
                                 <tr>
-                                    <th scope="col" class="border-0 rounded-start">ID</th>
+                                    <th scope="col" class="border-0 rounded-start">Image</th>
+                                    <th scope="col" class="border-0">ID</th>
                                     <th scope="col" class="border-0">Nom du matériel</th>
                                     <th scope="col" class="border-0">Salle</th>
                                     <th scope="col" class="border-0">Slug</th>
@@ -42,6 +43,12 @@
                                 {% for material in materials %}
                                 <tr>
                                     <!-- Table data -->
+                                    <td>
+                                        <div class="w-60px">
+                                            <!-- Title -->
+                                            <img src="{{ asset('assets/images/uploads/materials/' ~ material.filename) }}" alt="{{ material.filename }}"  class="card-img-top" />
+                                        </div>
+                                    </td>
                                     <td>
                                         <div class="d-flex align-items-center position-relative">
                                             <!-- Title -->

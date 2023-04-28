@@ -15,8 +15,6 @@ Page intro START -->
                     <a href="{{ path('material') }}" class="btn btn-sm btn-primary-soft me-1 mb-1 mb-md-0">Retour</a>
                     <!-- Title -->
                         <h1>{{ material.titre }}</h1>
-
-                    </div>
                    
                     <!-- Content -->
                     <ul class="list-inline mb-0">
@@ -133,9 +131,19 @@ Page intro START -->
                             <!-- Video START -->
                             <div class="card shadow p-2 mb-4 z-index-9">
                                 <div class="overflow-hidden rounded-3">
-                                    <img src="{{ asset('assets/images/uploads/materials/' ~ material.filename) }}" alt="{{ material.filename }}" class="img-thumbnail" />
+                                    <img src="{{ asset('assets/images/uploads/materials/' ~ material.filename) }}" alt="{{ material.filename }}"  class="card-img-top" />
                                 </div>
                             </div>
+                            <div>
+                                <div class="card shadow p-2 mb-4 z-index-9">
+                                    <div class="overflow-hidden rounded-3 m-2">
+                                        <p>Voir la page du produit sur le site web de Laerdal :</p>
+                                        <h6 href="{{ material.liens }}" class="btn btn-sm btn-primary-soft me-1 mb-1 mb-md-0">Page Laerdal</h6>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -251,9 +251,9 @@ Matériel START -->
                                 <div class="card shadow h-100">
                                     <!-- Image -->
                                     {% if material.filename %}
-                                        <img src="{{ vich_uploader_asset(material, 'imageFile') }}" alt="{{ material.filename }}" class="img-thumbnail" />
+                                        <img src="{{ vich_uploader_asset(material, 'imageFile') }}" alt="{{ material.filename }}" class="card-img-top" />
                                     {% else %}
-                                        <img src="/uploads/materiel/default.jpg" alt="default.jpg" class="img-thumbnail" />
+                                        <img src="/uploads/materiel/default.jpg" alt="default.jpg" class="card-img-top" />
                                     {% endif %}
                                     <!-- Card body -->
 
