@@ -252,7 +252,9 @@ Matériel START -->
                                     <!-- Image -->
                                     {% if material.filename %}
                                         <img src="{{ vich_uploader_asset(material, 'imageFile') }}" alt="{{ material.filename }}" class="img-thumbnail" />
-                                    {% endif %}<!-- Ajout de l'image twig -->
+                                    {% else %}
+                                        <img src="/uploads/materiel/default.jpg" alt="default.jpg" class="img-thumbnail" />
+                                    {% endif %}
                                     <!-- Card body -->
 
                                     <div class="card-body pb-0">
