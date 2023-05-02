@@ -38,48 +38,53 @@
             <br>
 
             <!-- Tabs content START -->
-            <div class="tab-content" id="course-pills-tabContent">
-                <!-- Content START -->
-                <div class="tab-pane fade show active" id="course-pills-tabs-1" role="tabpanel" aria-labelledby="course-pills-tab-1"> <!-- Changer l'id et dynamiser -->
-                    <div class="row g-4">
-                        {% for material in materials %} <!-- Ajout de la boucle twig -->
-                        <!-- Card item START -->
-                        <div class="col-sm-6 col-lg-4 col-xl-3">
-                            <div class="card shadow h-100">
-                                <!-- Image -->
-                                {% if material.filename %}
-                                    <img src="{{ vich_uploader_asset(material, 'imageFile') }}" alt="{{ material.filename }}"  class="card-img-top  h-200px" />
-                                {% else %}
-                                    <img src="/uploads/materiel/default.jpg" alt="default.jpg"  class="card-img-top" />
-                                {% endif %}
-                                <!-- Card body -->
 
-                                <div class="card-body pb-0">
-                                    <!-- Badge and favorite -->
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <a href="#" class="badge bg-purple bg-opacity-10 text-purple">{{ material.badge }}</a> <!-- Ajout du badge de l'id -->
+                <div class="tab-content" id="course-pills-tabContent">
+                    <!-- Content START -->
+                    <div class="tab-pane fade show active" id="course-pills-tabs-1" role="tabpanel" aria-labelledby="course-pills-tab-1"> <!-- Changer l'id et dynamiser -->
+                        <div class="row g-4">
+                            {% for material in materials %} <!-- Ajout de la boucle twig -->
+                                <!-- Card item START -->
+                                <div class="col-sm-6 col-lg-4 col-xl-3">
+                                    <div class="card shadow h-100">
+                                        <!-- Image -->
+                                        {% if material.filename %}
+                                            <img src="{{ vich_uploader_asset(material, 'imageFile') }}" alt="{{ material.filename }}"  class="card-img-top  h-200px" />
+                                        {% else %}
+                                            <img src="/uploads/materiel/default.jpg" alt="default.jpg"  class="card-img-top" />
+                                        {% endif %}
+                                        <!-- Card body -->
+
+                                        <div class="card-body pb-0">
+                                            <!-- Badge and favorite -->
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <a href="#" class="badge bg-purple bg-opacity-10 text-purple">{{ material.badge }}</a> <!-- Ajout du badge de l'id -->
+                                            </div>
+                                            <br>
+                                            <!-- Title -->
+                                            <h5 class="card-title fw-normal"><a href="{{ path('material_details', {'id': material.id}) }}">{{ material.titre }}</a></h5> <!-- Ajout du titre -->
+                                            <p class="mb-2 text-truncate-2">{{ material.salle }}</p> <!-- Ajout de la salle -->
+                                        </div>
+                                        <!-- Card footer -->
+                                        <div class="card-footer pt-0 pb-3">
+                                            <hr>
+                                            <div class="d-flex justify-content-between">
+                                                <span class="h6 fw-light mb-0"><i class="fa fa-location-arrow text-primary me-2"></i>{{ material.localite }}</span> <!-- Ajout de la localité -->
+                                                <span class="h6 fw-light mb-0"><i class="fas fa-table text-primary me-2"></i>Nombre : {{ material.nombre }}</span> <!-- Ajout le nombre -->
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br>
-                                    <!-- Title -->
-                                    <h5 class="card-title fw-normal"><a href="{{ path('material_details', {'id': material.id}) }}">{{ material.titre }}</a></h5> <!-- Ajout du titre -->
-                                    <p class="mb-2 text-truncate-2">{{ material.salle }}</p> <!-- Ajout de la salle -->
                                 </div>
-                                <!-- Card footer -->
-                                <div class="card-footer pt-0 pb-3">
-                                    <hr>
-                                    <div class="d-flex justify-content-between">
-                                        <span class="h6 fw-light mb-0"><i class="fa fa-location-arrow text-primary me-2"></i>{{ material.localite }}</span> <!-- Ajout de la localité -->
-                                        <span class="h6 fw-light mb-0"><i class="fas fa-table text-primary me-2"></i>Nombre : {{ material.nombre }}</span> <!-- Ajout le nombre -->
-                                    </div>
-                                </div>
-                            </div>
+                                <!-- Card item END -->
+                            {% endfor %}
                         </div>
-                        <!-- Card item END -->
-                        {% endfor %}
+
                     </div>
+                    <!-- Content END -->
                 </div>
-                <!-- Content END -->
-            </div>
+
+
+
             <!-- Tabs content END -->
         </div>
     </section>

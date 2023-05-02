@@ -87,7 +87,7 @@ class Material
     private ?string $slugs = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", nullable=true)
      */
     private ?string $possibilite = null;
 
@@ -97,7 +97,7 @@ class Material
     private ?string $modeEmploi = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", nullable=true)
      */
     private ?string $caracteristique = null;
 
