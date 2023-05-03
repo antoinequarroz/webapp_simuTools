@@ -28,10 +28,6 @@
                     {{ form_label(form.localite, 'Localité', {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.localite, {'attr': {'class': 'form-control'}}) }}
                 </div>
-                <div class="mb-3">
-                    {{ form_label(form.possibilite, 'Possibilité', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.possibilite, {'attr': {'class': 'form-control'}}) }}
-                </div>
 
                 <div class="mb-3">
                     {{ form_label(form.liens, 'Liens', {'label_attr': {'class': 'form-label'}}) }}
@@ -63,10 +59,6 @@
                     {{ form_widget(form.modeEmploi, {'attr': {'class': 'form-control', 'type': 'file'}}) }}
                 </div>
 
-                <div class="mb-3">
-                    {{ form_label(form.caracteristique, 'Caractéristique', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.caracteristique, {'attr': {'class': 'form-control'}}) }}
-                </div>
 
             </div>
         </div>
@@ -77,6 +69,17 @@
                     {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '6'}}) }}
                 </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.possibilite, 'Possibilité', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.possibilite, {'attr': {'class': 'form-control', 'rows': '6'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.caracteristique, 'Caractéristique', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.caracteristique, {'attr': {'class': 'form-control', 'rows': '6'}}) }}
+                </div>
+
             </div>
         </div>
 

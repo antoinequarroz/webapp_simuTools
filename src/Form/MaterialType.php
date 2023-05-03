@@ -56,7 +56,7 @@ class MaterialType extends AbstractType
             ->add('nombre', IntegerType::class, [
                 'label' => 'Nombre',
             ])
-            ->add('possibilite', TextType::class, [
+            ->add('possibilite', TextareaType::class, [
                 'label' => 'Possibilité',
             ])
             ->add('modeEmploi', FileType::class, [
@@ -86,7 +86,7 @@ class MaterialType extends AbstractType
                     'Petit matériel' => 'course-pills-tab-4',
                 ],
             ])
-            ->add('caracteristique', TextType::class, [
+            ->add('caracteristique', TextareaType::class, [
                 'label' => 'Caractéristique',
             ]);
     }
